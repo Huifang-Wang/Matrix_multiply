@@ -1,0 +1,44 @@
+#python3读取两个TXT文件数据输出两个矩阵形式（举例3*3矩阵）
+
+from numpy import *
+A = zeros((3,3), dtype=float)  #先创建一个3*3的全零方阵A，数据类型设置为浮点型
+B = zeros((3,3), dtype=float)  #先创建一个3*3的全零方阵B，数据类型设置为浮点型
+
+f1 = open('C:\\Users\whf\Desktop\matrix1.txt')  #打开名为matrix1的TXT数据文件
+lines1 = f1.readlines()   #把全部数据文件读到一个列表lines1中
+f2 = open('C:\\Users\whf\Desktop\matrix2.txt')  #打开名为matrix2的TXT数据文件
+lines2 = f2.readlines()   #把全部数据文件读到一个列表lines2中
+
+A_row = 0      #表示A矩阵的行，从0开始
+B_row = 0      #表示B矩阵的行，从0开始
+#print(lines)
+
+for line in lines1:     #把lines1中的数据逐行读出来
+    list = line.strip('\n').split(' ')  #处理逐行数据；strip表示把头尾的'\n'去掉，split表示以空格来分割行数据，然后把处理后的数据返回到list列表中
+    A[A_row:] = list[0:3]  #把处理后的数据放到方阵A中。list[0:3]表示列表的0,1,2列数据放到矩阵A中的A_row行
+    A_row+=1    #然后方阵A的下一行接着读
+    #print(line)
+
+for line in lines2:     #把lines2中的数据逐行读出来
+    list = line.strip('\n').split(' ')  #处理逐行数据；strip表示把头尾的'\n'去掉，split表示以空格来分割行数据，然后把处理后的数据返回到list列表中
+    B[B_row:] = list[0:3]  #把处理后的数据放到方阵B中。list[0:3]表示列表的0,1,2列数据放到矩阵B中的B_row行
+    B_row+=1    #然后方阵B的下一行接着读
+    #print(line)
+
+print(A)   #打印方阵A
+print(B)   #打印方阵B
+
+def MatrixMulti(A,B):   #函数
+    #n = len(A) #矩阵A的长度，有多少行
+    C = zeros((3, 3), dtype=float)  #创建一个3*3的全零方阵C，数据类型设置为浮点型,用来放置相乘后的矩阵
+    for i in range(0,3):
+        for j in range(0,3):
+            for k in range(0, 3):
+                C[i][j] = C[i][j] + A[i][k] * B[k][j]   #一行一列相乘
+    return C
+
+
+if __name__ == '__main__':
+    C=MatrixMulti(A, B)
+    print(C)
+
